@@ -57,7 +57,7 @@ public class DemoWebShopTest {
     }
 
     @Test
-    @DisplayName("Отображение товара в корзине после добавления товара через API")
+    @DisplayName("Отображение товара в корзине после добавления товара через API (AllureRestAssured)")
     void displayItemInShoppingCartAfterAddItemViaAPITestWithAllureRestAssured() {
 
         step("Добавить товар '14.1-inch Laptop'", () ->
@@ -80,7 +80,7 @@ public class DemoWebShopTest {
     }
 
     @Test
-    @DisplayName("Отображение товара в корзине после добавления товара через API")
+    @DisplayName("Отображение товара в корзине после добавления товара через API (customLogFilter)")
     void displayItemInShoppingCartAfterAddItemViaAPITestWithCustomLogFilter() {
 
         step("Добавить товар '14.1-inch Laptop'", () ->
