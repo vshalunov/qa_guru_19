@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "updatetopcartsectionhtml": {
+      "type": "string"
+    },
+    "updateflyoutcartsectionhtml": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

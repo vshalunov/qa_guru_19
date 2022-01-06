@@ -16,8 +16,10 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.github.zlwqa.filters.CustomLogFilter.customLogFilter;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
 public class DemoWebShopTest {
@@ -25,7 +27,7 @@ public class DemoWebShopTest {
     public static AppConfig webConfig = ConfigFactory.create(AppConfig.class, System.getProperties());
     public static String authorizationCookie;
     public static String updateTopCartSection;
-    
+
     @BeforeAll
     static void setup() {
         RestAssured.baseURI = webConfig.apiUrl();
@@ -56,7 +58,7 @@ public class DemoWebShopTest {
 
     @Test
     @DisplayName("Отображение товара в корзине после добавления товара через API")
-    void displayItemInShoppingCartAfterAddItemViaAPITest() {
+    void displayItemInShoppingCartAfterAddItemViaAPITestWithAllureRestAssured() {
 
         step("Добавить товар '14.1-inch Laptop'", () ->
                 updateTopCartSection = given()
@@ -65,6 +67,30 @@ public class DemoWebShopTest {
                         .when()
                         .post("addproducttocart/catalog/31/1/1")
                         .then().log().body()
+                        .body(matchesJsonSchemaInClasspath("schema/displayItemInShoppingCartAfterAddItemViaAPITestSchema.json"))
+                        .statusCode(200)
+                        .extract()
+                        .path("updatetopcartsectionhtml"));
+
+        step("Открыть главную страницу", () ->
+                open(""));
+
+        step("Количество товара = " + updateTopCartSection, () ->
+                $(".cart-qty").shouldHave(text(updateTopCartSection)));
+    }
+
+    @Test
+    @DisplayName("Отображение товара в корзине после добавления товара через API")
+    void displayItemInShoppingCartAfterAddItemViaAPITestWithCustomLogFilter() {
+
+        step("Добавить товар '14.1-inch Laptop'", () ->
+                updateTopCartSection = given()
+                        .filter(customLogFilter().withCustomTemplates())
+                        .cookie("NOPCOMMERCE.AUTH", authorizationCookie)
+                        .when()
+                        .post("addproducttocart/catalog/31/1/1")
+                        .then().log().body()
+                        .body(matchesJsonSchemaInClasspath("schema/displayItemInShoppingCartAfterAddItemViaAPITestSchema.json"))
                         .statusCode(200)
                         .extract()
                         .path("updatetopcartsectionhtml"));
