@@ -67,7 +67,7 @@ public class DemoWebShopTest {
                         .when()
                         .post("addproducttocart/catalog/31/1/1")
                         .then().log().body()
-                        .body(matchesJsonSchemaInClasspath("schema/displayItemInShoppingCartAfterAddItemViaAPITestSchema.json"))
+                        .body(matchesJsonSchemaInClasspath("schema/AddItemTestSchema.json"))
                         .statusCode(200)
                         .extract()
                         .path("updatetopcartsectionhtml"));
@@ -90,7 +90,7 @@ public class DemoWebShopTest {
                         .when()
                         .post("addproducttocart/catalog/31/1/1")
                         .then().log().body()
-                        .body(matchesJsonSchemaInClasspath("schema/displayItemInShoppingCartAfterAddItemViaAPITestSchema.json"))
+                        .body(matchesJsonSchemaInClasspath("schema/AddItemTestSchema.json"))
                         .statusCode(200)
                         .extract()
                         .path("updatetopcartsectionhtml"));
