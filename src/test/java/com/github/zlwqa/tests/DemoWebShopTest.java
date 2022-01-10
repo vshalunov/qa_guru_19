@@ -32,6 +32,7 @@ public class DemoWebShopTest {
     static void setup() {
         RestAssured.baseURI = webConfig.apiUrl();
         Configuration.baseUrl = webConfig.webUrl();
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub/";
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
         step("Получить cookie через api и установить его в браузере", () -> {
